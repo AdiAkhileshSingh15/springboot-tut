@@ -16,8 +16,10 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import dev.springtut.springtut.model.Content;
-import dev.springtut.springtut.repository.ContentCollectionRepository;
-import dev.springtut.springtut.repository.ContentJdbcTemplateRepository;
+import dev.springtut.springtut.model.Status;
+import dev.springtut.springtut.repository.ContentRepository;
+// import dev.springtut.springtut.repository.ContentCollectionRepository;
+// import dev.springtut.springtut.repository.ContentJdbcTemplateRepository;
 import jakarta.validation.Valid;
 
 @RestController
@@ -25,11 +27,13 @@ import jakarta.validation.Valid;
 @CrossOrigin
 public class ContentController {
 
-    private final ContentCollectionRepository repository;
+    // private final ContentCollectionRepository repository;
 
     // private final ContentJdbcTemplateRepository repository;
 
-    public ContentController(ContentCollectionRepository repository) {
+    private final ContentRepository repository;
+
+    public ContentController(ContentRepository repository) {
         this.repository = repository;
     }
 
@@ -65,6 +69,16 @@ public class ContentController {
         if (!repository.existsById(id)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Content not found");
         }
-        repository.delete(id);
+        repository.deleteById(id);
+    }
+
+    @GetMapping("/filter/{keyword}")
+    public List<Content> findByTitle(@PathVariable String keyword) {
+        return repository.findAllByTitleContains(keyword);
+    }
+
+    @GetMapping("/filter/status/{status}")
+    public List<Content> findByStatus(@PathVariable Status status) {
+        return repository.listByStatus(status);
     }
 }
