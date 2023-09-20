@@ -24,7 +24,7 @@ public class ContentJdbcTemplateRepository {
     private static Content mapRow(ResultSet rs, int rowNum) throws SQLException {
         return new Content(rs.getInt("id"),
                 rs.getString("title"),
-                rs.getString("description"),
+                rs.getString("desc"),
                 Status.valueOf(rs.getString("status")),
                 Type.valueOf(rs.getString("content_type")),
                 rs.getObject("date_created", LocalDateTime.class),
@@ -38,14 +38,14 @@ public class ContentJdbcTemplateRepository {
         return contents;
     }
 
-    public void createContent(String title, String description, Status status, Type contentType, String URL) {
-        String sql = "INSERT INTO Content (title, description, status, content_type, date_created, URL) VALUES (?, ?, ?, ?, NOW(), ?)";
-        jdbcTemplate.update(sql, title, description, status, contentType, URL);
+    public void createContent(String title, String desc, Status status, Type contentType, String URL) {
+        String sql = "INSERT INTO Content (title, desc, status, content_type, date_created, URL) VALUES (?, ?, ?, ?, NOW(), ?)";
+        jdbcTemplate.update(sql, title, desc, status, contentType, URL);
     }
 
-    public void updateContent(int id, String title, String description, Status status, Type contentType, String URL) {
-        String sql = "UPDATE Content SET title=?, description=?, status=?, content_type=?, date_updated=NOW(), url=? WHERE id=?";
-        jdbcTemplate.update(sql, title, description, status, contentType, URL, id);
+    public void updateContent(int id, String title, String desc, Status status, Type contentType, String URL) {
+        String sql = "UPDATE Content SET title=?, desc=?, status=?, content_type=?, date_updated=NOW(), url=? WHERE id=?";
+        jdbcTemplate.update(sql, title, desc, status, contentType, URL, id);
     }
 
     public void deleteContent(int id) {
