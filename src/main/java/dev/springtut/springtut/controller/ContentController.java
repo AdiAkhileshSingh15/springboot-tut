@@ -17,6 +17,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import dev.springtut.springtut.model.Content;
 import dev.springtut.springtut.repository.ContentCollectionRepository;
+import dev.springtut.springtut.repository.ContentJdbcTemplateRepository;
 import jakarta.validation.Valid;
 
 @RestController
@@ -25,6 +26,8 @@ import jakarta.validation.Valid;
 public class ContentController {
 
     private final ContentCollectionRepository repository;
+
+    // private final ContentJdbcTemplateRepository repository;
 
     public ContentController(ContentCollectionRepository repository) {
         this.repository = repository;
