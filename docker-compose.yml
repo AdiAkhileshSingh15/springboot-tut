@@ -1,0 +1,9 @@
+services:
+  postgres:
+    image: postgres:alpine
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=adi123
+      - POSTGRES_DB=content
+    ports:
+      - "5432:5432"
